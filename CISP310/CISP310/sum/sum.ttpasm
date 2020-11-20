@@ -1,0 +1,78 @@
+ldi  d,0
+jmpi main
+
+sumUntilZero:
+  // x
+  // retAddr <- D
+  // p
+  // s
+  dec d
+  dec d // alloc space for local var p and s
+  // x      <- D+3   <- A
+  // retAddr <-D+2
+  // p      <- D+1
+  // s      <- D
+  ldi a,3
+  add a,d   // a == &x
+  ldi b,1
+  add b,d   // b == &p
+  st  (b),a // p = &x
+  ldi a,0   // RHS of line 10
+  st  (d),a // s = 0
+whileBegin:
+  ldi b,1
+  add b,d   // b == &p
+  ld  b,(b) // b == p
+  ld  b,(b) // b == *p
+  and b,b
+  jzi whileEnd
+  // begin of loop body
+    ld  a,(d)  // a == s
+    add a,b    // a == s+*p
+    st  (d),a  // s = s+*p
+
+    ldi b,1
+    add b,d    // b == &p
+    ld  a,(b)  // a == p
+    inc a      // a == p+1
+    st  (b),a  // p = p+1
+  // end of loop body
+  jmpi whileBegin
+whileEnd:
+ld a,(d) // a == s
+inc d
+inc d    // dealloc local var
+ld b,(d) 
+inc d
+jmp b  
+
+main:
+  dec d   // alloc for k
+  ldi a,5
+  dec d   // alloc for arg 5
+  st  (d),a
+  ldi a,4
+  dec d   // alloc for arg 5
+  st  (d),a
+  ldi a,0
+  dec d   // alloc for arg 5
+  st  (d),a
+  ldi a,3
+  dec d   // alloc for arg 5
+  st  (d),a
+  ldi a,2
+  dec d   // alloc for arg 5
+  st  (d),a
+  ldi a,1
+  dec d   // alloc for arg 5
+  st  (d),a
+  ldi a,main_retFromSub
+  dec d
+  st  (d),a // push retAddr
+  jmpi sumUntilZero
+main_retFromSub:
+  ldi b,6
+  add d,b
+  st  (d),a
+  inc d
+  halt

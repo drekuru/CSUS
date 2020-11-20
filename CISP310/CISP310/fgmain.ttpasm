@@ -1,0 +1,30 @@
+  jmpi main
+
+f:
+  // code
+  // assume D points to the ret addr on stack
+  ld  b,(d)
+  inc d
+  jmp b
+
+g:
+  // code
+  // assume D points to the ret addr on stack
+  ldi  a,g_ret1
+  dec  d    // alloc a byte on stack
+  st   (d),a  // store ret addr on stack
+  jmpi f
+g_ret1:
+  ld  b,(d)
+  inc d
+  jmp b
+
+main:
+  ldi  d,0  // initialize stack point D 
+  
+  ldi  a,main_ret1
+  dec  d    // alloc a byte on stack
+  st   (d),a  // store ret addr on stack
+  jmpi g
+main_ret1:
+  halt

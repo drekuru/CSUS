@@ -1,0 +1,12 @@
+Jim
+Jack
+Bryan
+Kobe
+Mabdul
+Abdul
+Kim
+Sara
+Andrey
+delete Bryan
+delete Sam
+delete Andrey

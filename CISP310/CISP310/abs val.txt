@@ -1,0 +1,9 @@
+ iff S==0 continue here
+and x,x
+jsi abs
+jmpi skip
+abs:
+not a
+inc a
+skip:
+halt
