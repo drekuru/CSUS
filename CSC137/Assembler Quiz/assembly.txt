@@ -1,0 +1,9 @@
+start: JMP gotime
+NOP
+NOP
+gotime:
+d:
+d:
+d: ADD
+PUSHI 99
+HALT
